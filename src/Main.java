@@ -270,7 +270,7 @@ public class Main {
             for (Dog dog : dogList) {
                 if (dog.getTailLength() >= tailLength) {
                     System.out.printf("%s (%s, %d år, %d kilo, %.1f cm svans) \n", dog.getName().toLowerCase(), dog.getBreed(), dog.getAge(), dog.getWeight(), dog.getTailLength());
-                    System.out.println(dog.hasOwner() ? "has owner" : "Does not have owner");
+                    //System.out.println(dog.hasOwner() ? "has owner" : "Does not have owner");
                 }
             }
             System.out.println("list dogs was performed!");
@@ -335,12 +335,6 @@ public class Main {
             System.out.println("Error: no dogs in register");
         }
     }
-
-                        if (auction.hasBids()){
-                        System.out.printf("Amount to bid (min %d)", auction.getHighestBid().getBidAmount() + 1 ); //why this no work
-                    }else {
-                        System.out.printf("Amount to bid (min %d)", 1);
-                    }
     */
 }
 

@@ -1,5 +1,10 @@
 public class Bid {
 
+    /**
+     * Karl Gustafsson kagu9654
+     * Har ej samarbetat med någon
+     **/
+
     private Auction auction; //användning?
     private User bidder;
     private int bidAmount;

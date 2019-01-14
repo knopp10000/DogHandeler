@@ -1,6 +1,9 @@
-import java.lang.reflect.Array;
-import java.util.ArrayList;
 import java.util.Arrays;
+
+/**
+ * Karl Gustafsson kagu9654
+ * Har ej samarbetat med någon
+ **/
 
 public class Auction {
 

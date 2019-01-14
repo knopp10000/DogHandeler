@@ -1,5 +1,10 @@
 import java.util.ArrayList;
 
+/**
+ * Karl Gustafsson kagu9654
+ * Har ej samarbetat med någon
+ **/
+
 public class Register {
 
     private ArrayList<Dog> dogList = new ArrayList<>();

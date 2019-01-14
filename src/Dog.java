@@ -22,12 +22,12 @@ public class Dog {
         this.name = name;
     }
 
-    public Dog(Dog dog){
+/*    public Dog(Dog dog){
         this.age = dog.getAge();
         this.breed = dog.getBreed();
         this.weight = dog.getWeight();
         this.name = dog.getName();
-    }
+    }*/
 
     //bulletproof?
     public double getTailLength(){
