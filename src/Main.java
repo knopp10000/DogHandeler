@@ -27,12 +27,12 @@ public class Main {
         System.out.println("Welcome to The DogHandler2000 v2.0");
 
         //Add instances for testing
-        Dog rufus = new Dog("Rufus", "Golden Retriever", 11, 40);
+        Dog rufus = new Dog("rufus", "Golden Retriever", 11, 40);
         register.registerDog(rufus);
-        register.registerDog(new Dog("Luna", "Uraiser", 1, 20));
-        User kalle = new User("Kalle");
+        register.registerDog(new Dog("luna", "Uraiser", 1, 20));
+        User kalle = new User("kalle");
         register.registerUser(kalle);
-        register.registerUser(new User("Denise"));
+        register.registerUser(new User("denise"));
         Auction auction = new Auction(rufus);
         register.registerAuction(auction);
         register.registerDogToAuction(rufus);
@@ -44,13 +44,19 @@ public class Main {
     private void runCommandLoop() {
         while (running) {
             System.out.println("Enter Command! To see available commands type \"help\"!");
-            String input = getInput();
+            String input = scanner.nextLine();
+            input = input.toLowerCase();
             handleCommand(input);
         }
     }
 
     private String getInput() {
-        return scanner.nextLine().toLowerCase();
+        String output;
+        do{
+            String input = scanner.nextLine().toLowerCase().trim();
+            output = input.substring(0, 1).toUpperCase() + input.substring(1);
+        }while (!isValidName(output));
+        return output;
     }
 
     private void handleCommand(String input) {
@@ -119,14 +125,14 @@ public class Main {
 
     private void closeAuction() {
         System.out.println("Enter the name of the dog");
-        String dogName = scanner.nextLine();
+        String dogName = getInput();
         Auction auction = register.getAuctionByDogName(dogName);
-        Dog dogInAuction = auction.dogInAuction;
         if (auction != null && auction.hasBids()){
             //Bid highestBid = auction.getHighestBid();
             //System.out.println("Highest Bid = " + highestBid.getBidAmount());
             //System.out.println("Winner = " + winner.getName());
             //System.out.println("Dog = " + dogInAuction.getName());
+            Dog dogInAuction = auction.dogInAuction;
             User winner = auction.getHighestBid().getBidder();
             winner.addDog(dogInAuction);
             dogInAuction.setOwner(winner);
@@ -136,6 +142,7 @@ public class Main {
         }else if (auction != null) {
             System.out.println("Error: this dog is not up for auction");
         }else if (!auction.hasBids()){
+            Dog dogInAuction = auction.dogInAuction;
             System.out.println("The auction is closed. No bids where made for" + dogInAuction.getName());
             register.unregisterDogInAuction(dogInAuction);
             register.unregisterAuction(auction);
@@ -146,11 +153,11 @@ public class Main {
 
     private void makeBid() {
         System.out.println("Enter the name of the user");
-        String userName = scanner.nextLine();
+        String userName = getInput();
         User user = register.getUserByName(userName);
         if (user != null){
             System.out.println("Enter the name of the dog");
-            String dogName = scanner.nextLine();
+            String dogName = getInput();
             Auction auction = register.getAuctionByDogName(dogName);
             if (auction != null){
                 boolean bidTooLow = true;
@@ -177,7 +184,7 @@ public class Main {
 
     private void startAuction() {
         System.out.println("What's the dogs name?");
-        String dogName = scanner.nextLine();
+        String dogName = getInput();
         Dog dog = register.getDogByName(dogName);
 
         if (dog != null && !register.dogIsInAuction(dog) && !dog.hasOwner()) {
@@ -197,28 +204,29 @@ public class Main {
 
     private void registerNewUser() {
         System.out.println("What's the users name?");
-        String name = scanner.nextLine();
+        String name = getInput();
         register.registerUser(new User(name));
         System.out.printf("%s added to the register\n", name);
     }
 
     private void registerNewDog() {
         System.out.println("What's the dogs name?");
-        String name = scanner.nextLine();
+        String name = getInput();
         System.out.println("What's the dogs breed?");
-        String breed = scanner.nextLine();
+        String breed = getInput();
         System.out.println("How old is the dog?");
         int age = scanner.nextInt();
+        scanner.nextLine();
         System.out.println("How many kilos does the dog weigh?");
         int weight = scanner.nextInt();
-        register.registerDog(new Dog(name, breed, age, weight));
         scanner.nextLine();
+        register.registerDog(new Dog(name, breed, age, weight));
         System.out.println("New dog registered");
     }
 
     private void increaseAge() {
         System.out.println("Which dog do you want to increase its age?");
-        String name = scanner.nextLine();
+        String name = getInput();
         Dog dog = register.getDogByName(name);
         if (dog != null) {
             dog.birthday();
@@ -230,7 +238,7 @@ public class Main {
 
     private void listBids(){
         System.out.println("Enter the name of the dog in the auction that you're looking for");
-        String name = scanner.nextLine();
+        String name = getInput();
         Auction auction = register.getAuctionByDogName(name);
         if (auction != null && auction.hasBids()){
             System.out.println("Here are the bids for this auction");
@@ -300,14 +308,14 @@ public class Main {
 
     private void removeDog() {
         System.out.println("What dog do you want to remove?");
-        String name = scanner.nextLine();
+        String name = getInput();
         Dog dog = register.getDogByName(name);
         register.unregisterDog(dog);
     }
 
     private void removeUser() {
         System.out.println("Enter name of the user you want to remove.");
-        String name = scanner.nextLine();
+        String name = getInput();
         User user = register.getUserByName(name);
         register.unregisterUser(user);
     }
@@ -321,6 +329,10 @@ public class Main {
     private void shutDown() {
         scanner.close();
         System.out.println("Closing down...");
+    }
+
+    private boolean isValidName(String string){
+        return !string.trim().isEmpty();
     }
 
     /*

@@ -81,7 +81,7 @@ public class Register {
             if (auction.getDog().getName().equals(name)){
                 return auction;
             }
-            System.out.println("Luna is not in auction:" + auction.auctionID);
+            System.out.println(name + " is not in auction:" + auction.auctionID);
         }
         System.out.println("There are no auctions");
         return null;
