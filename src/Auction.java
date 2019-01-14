@@ -7,14 +7,13 @@ public class Auction {
     public Dog dogInAuction;
     public int auctionID;
     private static int instanceCount;
-    private int highestBid;
+    private Bid highestBid;
     private Bid[] bids = new Bid[1];
 
     Auction(Dog dog){
         instanceCount++;
         auctionID = instanceCount;
         dogInAuction = dog;
-        //register.registerDogToAuction(dog); //could be static??
     }
 
     public void addBid(Bid bid){
@@ -34,16 +33,12 @@ public class Auction {
         return bids.length > 1;
     }
 
-    public int getHighestBid(){
-        System.out.println(getBidsAsString());
+    public Bid getHighestBid(){
         sortBids();
-        System.out.println(getBidsAsString());
-        if (bids.length > 1){
-            highestBid = bids[0].getBidAmount();
-        }else {
-            highestBid = 0;
+        if (this.hasBids()){
+            return bids[0];
         }
-        return highestBid;
+        return new Bid(this, new User("Fuck"), 9999); //correct?
     }
 
     public void sortBids() {

@@ -62,12 +62,23 @@ public class Register {
         }
     }
 
+    public void unregisterAuction(Auction auction){
+        if (auction != null){
+            userList.remove(auction);
+            auction = null;
+        }else{
+            System.out.println("error case insensitive: User med det namnet fanns ej i registret");
+        }
+    }
+
     public Auction getAuctionByDogName(String name){
         for (Auction auction : auctionList){
             if (auction.getDog().getName().equals(name)){
                 return auction;
             }
+            System.out.println("Luna is not in auction:" + auction.auctionID);
         }
+        System.out.println("There are no auctions");
         return null;
     }
 

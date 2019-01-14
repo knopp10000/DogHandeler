@@ -1,3 +1,4 @@
+import java.security.acl.Owner;
 import java.util.ArrayList;
 
 /**
@@ -62,6 +63,14 @@ public class Dog {
 
     public String getName() {
         return name;
+    }
+
+    public void setOwner(User owner){
+        this.owner = owner;
+    }
+
+    public User getOwner(){
+        return owner;
     }
 
     public Boolean hasOwner(){

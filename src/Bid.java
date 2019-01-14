@@ -10,11 +10,19 @@ public class Bid {
         this.bidAmount = bidAmount;
     }
 
+    Bid(){
+        this.bidAmount = 0;
+    }
+
     public User getBidder(){
         return bidder;
     }
 
     public int getBidAmount(){
         return bidAmount;
+    }
+
+    public void setBidAmount(int bidAmount){
+        this.bidAmount = bidAmount;
     }
 }

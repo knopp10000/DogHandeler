@@ -91,6 +91,10 @@ public class Main {
                 listAuctions();
                 break;
             }
+            case "close auction": {
+                closeAuction();
+                break;
+            }
             case "make bid": {
                 makeBid();
                 break;
@@ -113,6 +117,33 @@ public class Main {
         }
     }
 
+    private void closeAuction() {
+        System.out.println("Enter the name of the dog");
+        String dogName = scanner.nextLine();
+        Auction auction = register.getAuctionByDogName(dogName);
+        Dog dogInAuction = auction.dogInAuction;
+        if (auction != null && auction.hasBids()){
+            //Bid highestBid = auction.getHighestBid();
+            //System.out.println("Highest Bid = " + highestBid.getBidAmount());
+            //System.out.println("Winner = " + winner.getName());
+            //System.out.println("Dog = " + dogInAuction.getName());
+            User winner = auction.getHighestBid().getBidder();
+            winner.addDog(dogInAuction);
+            dogInAuction.setOwner(winner);
+            System.out.printf("The auction is closed. The winning bid was %dkr and was made by %s\n", auction.getHighestBid().getBidAmount(), winner.getName());
+            register.unregisterDogInAuction(dogInAuction); //
+            register.unregisterAuction(auction); //make into method?
+        }else if (auction != null) {
+            System.out.println("Error: this dog is not up for auction");
+        }else if (!auction.hasBids()){
+            System.out.println("The auction is closed. No bids where made for" + dogInAuction.getName());
+            register.unregisterDogInAuction(dogInAuction);
+            register.unregisterAuction(auction);
+        }else{
+            System.out.println("This should not occur");
+        }
+    }
+
     private void makeBid() {
         System.out.println("Enter the name of the user");
         String userName = scanner.nextLine();
@@ -124,10 +155,10 @@ public class Main {
             if (auction != null){
                 boolean bidTooLow = true;
                 while (bidTooLow) {
-                    System.out.printf("Amount to bid (min %d)", auction.getHighestBid() + 1);
+                    System.out.printf("Amount to bid (min %d)", auction.hasBids() ? auction.getHighestBid().getBidAmount() + 1 : 1); //why this no work
                     int bidAmount = scanner.nextInt();
                     scanner.nextLine();
-                    if (bidAmount > auction.getHighestBid()) {
+                    if (bidAmount > (auction.hasBids() ? auction.getHighestBid().getBidAmount() : 0)) {
                         Bid bid = new Bid(auction, user, bidAmount);
                         auction.addBid(bid);
                         System.out.println("Bid made");
@@ -151,6 +182,7 @@ public class Main {
 
         if (dog != null && !register.dogIsInAuction(dog) && !dog.hasOwner()) {
             Auction auction = new Auction(dog);
+
             register.registerAuction(auction);
             register.registerDogToAuction(dog);
             System.out.printf("%s has ben put up for auction in auction #%d\n", dog.getName(), auction.auctionID);
@@ -238,6 +270,7 @@ public class Main {
             for (Dog dog : dogList) {
                 if (dog.getTailLength() >= tailLength) {
                     System.out.printf("%s (%s, %d år, %d kilo, %.1f cm svans) \n", dog.getName().toLowerCase(), dog.getBreed(), dog.getAge(), dog.getWeight(), dog.getTailLength());
+                    System.out.println(dog.hasOwner() ? "has owner" : "Does not have owner");
                 }
             }
             System.out.println("list dogs was performed!");
@@ -251,7 +284,13 @@ public class Main {
         ArrayList<User> userList = register.cloneUserList();
         if (!userList.isEmpty()) {
             for (User user : userList) {
-                System.out.println(user.getName() + user.getDogs() + "\n");
+                StringBuffer dogList = new StringBuffer();
+                if (user.hasDog()){
+                    for (Dog dog: user.getDogs()) {
+                        dogList.append(dog.getName());
+                    }
+                }
+                System.out.println(user.getName() + dogList);
             }
             System.out.println("list users was performed!");
         } else {
@@ -283,6 +322,7 @@ public class Main {
         scanner.close();
         System.out.println("Closing down...");
     }
+
     /*
     private void listAllDogs() {
         ArrayList<Dog> dogList = register.cloneDogList();
@@ -294,6 +334,13 @@ public class Main {
         } else {
             System.out.println("Error: no dogs in register");
         }
-    } */
+    }
+
+                        if (auction.hasBids()){
+                        System.out.printf("Amount to bid (min %d)", auction.getHighestBid().getBidAmount() + 1 ); //why this no work
+                    }else {
+                        System.out.printf("Amount to bid (min %d)", 1);
+                    }
+    */
 }
 
