@@ -15,10 +15,6 @@ public class Bid {
         this.bidAmount = bidAmount;
     }
 
-    public Bid(){
-        this.bidAmount = 0;
-    }
-
     public User getBidder(){
         return bidder;
     }

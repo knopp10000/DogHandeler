@@ -34,9 +34,9 @@ public class Main {
         Dog brufus = new Dog("Brufus", "Golden Retriever", 12, 40);
         register.registerDog(brufus);
         register.registerDog(new Dog("Luna", "Uraiser", 1, 20));
-        User kalle = new User("kalle");
+        User kalle = new User("Kalle");
         register.registerUser(kalle);
-        register.registerUser(new User("denise"));
+        register.registerUser(new User("Denise"));
         Auction auction = new Auction(rufus);
         register.registerAuction(auction);
         register.registerDogToAuction(rufus);
@@ -58,7 +58,9 @@ public class Main {
         boolean nameIsNotValid = true;
         String output = "";
         while (nameIsNotValid){
-            String input = scanner.nextLine().toLowerCase().trim();
+            String input = scanner.nextLine();
+            input = input.toLowerCase();
+            input = input.trim();
             if (input.length() > 2){
                 output = input.substring(0, 1).toUpperCase() + input.substring(1);
             }
@@ -155,7 +157,7 @@ public class Main {
             System.out.println("Error: this dog is not up for auction");
         }else if (!auction.hasBids()){
             Dog dogInAuction = auction.getDog();
-            System.out.println("The auction is closed. No bids where made for" + dogInAuction.getName());
+            System.out.println("The auction is closed. No bids where made for " + dogInAuction.getName());
             register.unregisterDogInAuction(dogInAuction);
             register.unregisterAuction(auction);
         }else{
@@ -288,9 +290,11 @@ public class Main {
             scanner.nextLine();
 
             for (Dog dog : dogList) {
-                if (dog.getTailLength() >= tailLength) {
+                if (dog.getTailLength() >= tailLength && !dog.hasOwner()) {
                     System.out.printf("%s (%s, %d år, %d kilo, %.1f cm svans) \n", dog.getName().toLowerCase(), dog.getBreed(), dog.getAge(), dog.getWeight(), dog.getTailLength());
                     //System.out.println(dog.hasOwner() ? "has owner" : "Does not have owner");
+                }else if (dog.getTailLength() >= tailLength && dog.hasOwner()){
+                    System.out.printf("%s (%s, %d år, %d kilo, %.1f cm svans, owned by %s) \n", dog.getName().toLowerCase(), dog.getBreed(), dog.getAge(), dog.getWeight(), dog.getTailLength(), dog.getOwner().getName());
                 }
             }
             System.out.println("list dogs was performed!");
@@ -307,10 +311,10 @@ public class Main {
                 StringBuffer dogList = new StringBuffer();
                 if (user.hasDog()){
                     for (Dog dog: user.getDogs()) {
-                        dogList.append(dog.getName());
+                        dogList.append(dog.getName() + " ");
                     }
                 }
-                System.out.println(user.getName() + dogList);
+                System.out.println(user.getName() + "[" + dogList + "]");
             }
             System.out.println("list users was performed!");
         } else {
@@ -330,6 +334,10 @@ public class Main {
         String name = getInput();
         User user = register.getUserByName(name);
         register.unregisterUser(user);
+        for (Auction auction : register.getAuctionsByUser(user)){
+            auction.removeBidsFromUser(user);
+        }
+
     }
 
     private void printCommands() {

@@ -36,6 +36,7 @@ public class Register {
     }
 
     public ArrayList<Auction> cloneAuctionList(){
+
         return new ArrayList<Auction>(auctionList);
     }
 
@@ -83,13 +84,30 @@ public class Register {
         if (!cloneAuctionList().isEmpty()){
             for (Auction auction : cloneAuctionList()){
                 if (auction.getDog().getName().equals(name)){ //måste ha rätt namn
-                    System.out.println("This auction is auctioning: " + auction.getDog().getName() + " You are looking for: " + name);
+                    //System.out.println("This auction is auctioning: " + auction.getDog().getName() + " You are looking for: " + name);
                     return auction;
                 }
                 //System.out.println(name + " is not in auction:" + auction.auctionID);
                 }
         }
         return null;
+    }
+
+    public ArrayList<Auction> getAuctionsByUser(User user){
+        ArrayList<Auction> userAuctions = new ArrayList<>();
+        if (!cloneAuctionList().isEmpty()){
+            for (Auction auction : cloneAuctionList()){
+                if (auction.hasBids()){
+                    Bid[] bids = auction.getBids();
+                    for (int i = 0; i < bids.length -1; i++){
+                        if (bids[i].getBidder().equals(user)){ //måste ha rätt namn
+                            userAuctions.add(auction);
+                        }
+                    }
+                }
+            }
+        }
+        return userAuctions;
     }
 
     public Dog getDogByName(String name){
@@ -131,7 +149,6 @@ public class Register {
     }
 
     public void sortDogListByTailLength(){
-        //ArrayList<Dog> dogListCopy = cloneDogList();
         dogList.sort((Dog dog1, Dog dog2) -> {
             if (dog1.getTailLength() < dog2.getTailLength())
                 return 1;

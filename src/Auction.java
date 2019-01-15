@@ -1,3 +1,4 @@
+import java.lang.reflect.Array;
 import java.util.Arrays;
 
 /**
@@ -61,11 +62,33 @@ public class Auction {
         sortBids();
         StringBuffer sb = new StringBuffer();
         for (int i=0; i<bids.length-1;i++){
-            sb.append(bids[i].getBidAmount());
+            sb.append(bids[i].getBidder().getName() + " " + bids[i].getBidAmount() + " kr");
             if (i < bids.length -2){
                 sb.append(", ");
             }
         }
         return sb.toString();
+    }
+
+    public void removeBidsFromUser(User user){
+        //System.out.println("Bid list for this auction:" + getBidsAsString());
+        boolean usersBeenRemoved = false;
+        while (!usersBeenRemoved){
+            usersBeenRemoved = true;
+            boolean bidIsFound = false;
+            int counter = 0;
+            Bid[] temp = new Bid[bids.length-1];
+            for (int i = 0; i < bids.length-1; i++){
+                if (bids[i].getBidder().equals(user) && !bidIsFound){
+                    bidIsFound = true;
+                    usersBeenRemoved = false;
+                } else {
+                    temp[counter] = bids[i];
+                    counter++;
+                }
+            }
+            bids = temp;
+        }
+        //System.out.println("Bid list for this auction after remove:" + getBidsAsString());
     }
 }
