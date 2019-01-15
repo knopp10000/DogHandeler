@@ -27,9 +27,9 @@ public class Main {
         System.out.println("Welcome to The DogHandler2000 v2.0");
 
         //Add instances for testing
-        Dog rufus = new Dog("rufus", "Golden Retriever", 11, 40);
+        Dog rufus = new Dog("Rufus", "Golden Retriever", 11, 40);
         register.registerDog(rufus);
-        register.registerDog(new Dog("luna", "Uraiser", 1, 20));
+        register.registerDog(new Dog("Luna", "Uraiser", 1, 20));
         User kalle = new User("kalle");
         register.registerUser(kalle);
         register.registerUser(new User("denise"));
@@ -51,11 +51,19 @@ public class Main {
     }
 
     private String getInput() {
-        String output;
-        do{
+        boolean nameIsNotValid = true;
+        String output = "";
+        while (nameIsNotValid){
             String input = scanner.nextLine().toLowerCase().trim();
-            output = input.substring(0, 1).toUpperCase() + input.substring(1);
-        }while (!isValidName(output));
+            if (input.length() > 2){
+                output = input.substring(0, 1).toUpperCase() + input.substring(1);
+            }
+            if (isValidName(output)){
+                nameIsNotValid = false;
+            } else {
+                System.out.println("Error: the name can’t be empty");
+            }
+        }
         return output;
     }
 
@@ -139,7 +147,7 @@ public class Main {
             System.out.printf("The auction is closed. The winning bid was %dkr and was made by %s\n", auction.getHighestBid().getBidAmount(), winner.getName());
             register.unregisterDogInAuction(dogInAuction); //
             register.unregisterAuction(auction); //make into method?
-        }else if (auction != null) {
+        }else if (auction == null) {
             System.out.println("Error: this dog is not up for auction");
         }else if (!auction.hasBids()){
             Dog dogInAuction = auction.dogInAuction;
