@@ -10,7 +10,6 @@ public class Auction {
     private Dog dogInAuction;
     private int auctionID;
     private static int instanceCount;
-    private Bid highestBid;
     private Bid[] bids = new Bid[1];
 
     Auction(Dog dog){

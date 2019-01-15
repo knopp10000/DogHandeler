@@ -38,7 +38,7 @@ public class User {
         }
     }
 
-    public boolean hasDog(Dog dog){
+/*    public boolean hasDog(Dog dog){
         return dogList.contains(dog);
     }
 
@@ -49,6 +49,6 @@ public class User {
             }
         }
         return false;
-    }
+    }*/
 
 }
