@@ -29,6 +29,10 @@ public class Main {
         //Add instances for testing
         Dog rufus = new Dog("Rufus", "Golden Retriever", 11, 40);
         register.registerDog(rufus);
+        Dog arufus = new Dog("Arufus", "Golden Retriever", 11, 40);
+        register.registerDog(arufus);
+        Dog brufus = new Dog("Brufus", "Golden Retriever", 12, 40);
+        register.registerDog(brufus);
         register.registerDog(new Dog("Luna", "Uraiser", 1, 20));
         User kalle = new User("kalle");
         register.registerUser(kalle);
@@ -140,7 +144,7 @@ public class Main {
             //System.out.println("Highest Bid = " + highestBid.getBidAmount());
             //System.out.println("Winner = " + winner.getName());
             //System.out.println("Dog = " + dogInAuction.getName());
-            Dog dogInAuction = auction.dogInAuction;
+            Dog dogInAuction = auction.getDog();
             User winner = auction.getHighestBid().getBidder();
             winner.addDog(dogInAuction);
             dogInAuction.setOwner(winner);
@@ -150,7 +154,7 @@ public class Main {
         }else if (auction == null) {
             System.out.println("Error: this dog is not up for auction");
         }else if (!auction.hasBids()){
-            Dog dogInAuction = auction.dogInAuction;
+            Dog dogInAuction = auction.getDog();
             System.out.println("The auction is closed. No bids where made for" + dogInAuction.getName());
             register.unregisterDogInAuction(dogInAuction);
             register.unregisterAuction(auction);
@@ -200,7 +204,7 @@ public class Main {
 
             register.registerAuction(auction);
             register.registerDogToAuction(dog);
-            System.out.printf("%s has ben put up for auction in auction #%d\n", dog.getName(), auction.auctionID);
+            System.out.printf("%s has ben put up for auction in auction #%d\n", dog.getName(), auction.getAuctionID());
         } else if (dog == null) {
             System.out.println("Error: no such dog");
         } else if (dog.hasOwner()) {
@@ -269,7 +273,7 @@ public class Main {
         if (!auctionList.isEmpty()) {
             for (Auction auction : auctionList) {
                 auction.sortBids();
-                System.out.printf("Auction #%d: %s. Top bids: [%s]\n", auction.auctionID, auction.dogInAuction.getName(), auction.getBidsAsString());
+                System.out.printf("Auction #%d: %s. Top bids: [%s]\n", auction.getAuctionID(), auction.getDog().getName(), auction.getBidsAsString());
             }
         } else {
             System.out.println("Error: no auctions in progress");

@@ -30,7 +30,8 @@ public class Register {
     }
 
     public ArrayList<Dog> cloneDogList(){
-        sortDogList();
+        sortDogListByTailLength();
+
         return new ArrayList<Dog>(dogList);
     }
 
@@ -125,12 +126,27 @@ public class Register {
         return dogNameList;
     }
 
-    public void sortDogList(){
-        ArrayList<String> dogNameList = getSortedDogNameList();
-        ArrayList<Dog> sortedDogList = new ArrayList<>();
-        for (String dogName : dogNameList){
-            sortedDogList.add(getDogByName(dogName));
-        }
-        dogList = sortedDogList;
+    public int sortDogsByName(Dog dog1, Dog dog2){
+       return dog1.getName().compareTo(dog2.getName());
+    }
+
+    public void sortDogListByTailLength(){
+        //ArrayList<Dog> dogListCopy = cloneDogList();
+        dogList.sort((Dog dog1, Dog dog2) -> {
+            if (dog1.getTailLength() < dog2.getTailLength())
+                return 1;
+            if (dog1.getTailLength() > dog2.getTailLength())
+                return -1;
+            else {
+                int comparison = sortDogsByName(dog1, dog2);
+                if (comparison > 0)
+                    return 1;
+                if (comparison < 0)
+                    return -1;
+                else {
+                    return 0;
+                }
+            }
+        });
     }
 }

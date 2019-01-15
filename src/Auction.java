@@ -7,8 +7,8 @@ import java.util.Arrays;
 
 public class Auction {
 
-    public Dog dogInAuction;
-    public int auctionID;
+    private Dog dogInAuction;
+    private int auctionID;
     private static int instanceCount;
     private Bid highestBid;
     private Bid[] bids = new Bid[1];
@@ -22,6 +22,10 @@ public class Auction {
     public void addBid(Bid bid){
         bids[bids.length-1] = bid;
         bids = Arrays.copyOf(bids, bids.length+1);
+    }
+
+    public int getAuctionID(){
+        return auctionID;
     }
 
     public Dog getDog(){

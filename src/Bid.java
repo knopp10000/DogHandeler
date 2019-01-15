@@ -9,13 +9,13 @@ public class Bid {
     private User bidder;
     private int bidAmount;
 
-    Bid(Auction auction, User bidder, int bidAmount){
+    public Bid(Auction auction, User bidder, int bidAmount){
         this.auction = auction;
         this.bidder = bidder;
         this.bidAmount = bidAmount;
     }
 
-    Bid(){
+    public Bid(){
         this.bidAmount = 0;
     }
 
