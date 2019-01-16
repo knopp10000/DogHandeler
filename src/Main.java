@@ -337,6 +337,10 @@ public class Main {
         for (Auction auction : register.getAuctionsByUser(user)){
             auction.removeBidsFromUser(user);
         }
+        for (Dog dog : user.getDogs()){
+            register.unregisterDog(dog);
+        }
+
 
     }
 
