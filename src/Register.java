@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.Collections;
 
 /**
  * Karl Gustafsson kagu9654
@@ -30,12 +29,12 @@ public class Register {
     }
 
     public ArrayList<Dog> cloneDogList(){
-        sortDogListByTailLength();
-
+        sortDogList();
         return new ArrayList<Dog>(dogList);
     }
 
     public ArrayList<Auction> cloneAuctionList(){
+        sortAuctionList();
         return new ArrayList<Auction>(auctionList);
     }
 
@@ -86,8 +85,7 @@ public class Register {
                     System.out.println("This auction is auctioning: " + auction.getDog().getName() + " You are looking for: " + name);
                     return auction;
                 }
-                //System.out.println(name + " is not in auction:" + auction.auctionID);
-                }
+            }
         }
         return null;
     }
@@ -117,21 +115,12 @@ public class Register {
             return false;
         }
     }
-    public ArrayList<String> getSortedDogNameList(){
-        ArrayList<String> dogNameList = new ArrayList<>();
-        for (Dog dog : dogList){
-            dogNameList.add(dog.getName());
-        }
-        Collections.sort(dogNameList, String.CASE_INSENSITIVE_ORDER);
-        return dogNameList;
-    }
 
     public int sortDogsByName(Dog dog1, Dog dog2){
        return dog1.getName().compareTo(dog2.getName());
     }
 
-    public void sortDogListByTailLength(){
-        //ArrayList<Dog> dogListCopy = cloneDogList();
+    public void sortDogList(){
         dogList.sort((Dog dog1, Dog dog2) -> {
             if (dog1.getTailLength() < dog2.getTailLength())
                 return 1;
@@ -149,4 +138,27 @@ public class Register {
             }
         });
     }
+
+    public void sortAuctionList(){
+        auctionList.sort((Auction auction1, Auction auction2) -> {
+            if (auction1.getHighestBid().getBidAmount() < auction2.getHighestBid().getBidAmount())
+                return 1;
+            if (auction1.getHighestBid().getBidAmount() > auction2.getHighestBid().getBidAmount())
+                return -1;
+            else {
+                return 0;
+            }
+        });
+    }
+
+    /*
+    public ArrayList<String> getSortedDogNameList(){
+        ArrayList<String> dogNameList = new ArrayList<>();
+        for (Dog dog : dogList){
+            dogNameList.add(dog.getName());
+        }
+        Collections.sort(dogNameList, String.CASE_INSENSITIVE_ORDER);
+        return dogNameList;
+    }
+     */
 }
