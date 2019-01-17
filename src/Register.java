@@ -138,9 +138,9 @@ public class Register {
     public void sortDogList(){
         dogList.sort((Dog dog1, Dog dog2) -> {
             if (dog1.getTailLength() < dog2.getTailLength())
-                return 1;
-            if (dog1.getTailLength() > dog2.getTailLength())
                 return -1;
+            if (dog1.getTailLength() > dog2.getTailLength())
+                return 1;
             else {
                 int comparison = sortDogsByName(dog1, dog2);
                 if (comparison > 0)
