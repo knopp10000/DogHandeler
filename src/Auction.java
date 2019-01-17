@@ -13,7 +13,7 @@ public class Auction {
     private static int instanceCount;
     private Bid[] bids = new Bid[1];
 
-    Auction(Dog dog){
+    public Auction(Dog dog){
         instanceCount++;
         auctionID = instanceCount;
         dogInAuction = dog;
@@ -75,28 +75,21 @@ public class Auction {
     }
 
     public void removeBidsFromUser(User user){
-        //System.out.println("Bid list for this auction:" + getThreeBiggestBidsAsString());
-        if (bids.length > 1) {
-            boolean bidIsFound = false;
-            int counter = 0;
-            Bid[] temp = new Bid[bids.length];
-            for (int i = 0; i < bids.length; i++) {
-                if (bids[i] != null) {
-                    if (bids[i].getBidder().equals(user) && !bidIsFound) {
-                        bidIsFound = true;
-                    } else {
-                        temp[counter] = bids[i];
-                        counter++;
-                    }
+        boolean bidIsFound = false;
+        int counter = 0;
+        Bid[] temp = new Bid[bids.length];
+        for (int i = 0; i < bids.length; i++) {
+            if (bids[i] != null) {
+                if (bids[i].getBidder().equals(user) && !bidIsFound) {
+                    bidIsFound = true;
+                } else {
+                    temp[counter] = bids[i];
+                    counter++;
                 }
-
-            }
-            if (bidIsFound){
-                bids = Arrays.copyOf(temp, temp.length -1);
-            }else {
-                bids = temp;
             }
         }
+        if (bidIsFound) {
+            bids = Arrays.copyOf(temp, temp.length - 1);
+        }
     }
-        //System.out.println("Bid list for this auction after remove:" + getThreeBiggestBidsAsString());
 }

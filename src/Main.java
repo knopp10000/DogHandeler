@@ -8,7 +8,7 @@ import java.util.Scanner;
 
 public class Main {
 
-    private static final String[] COMMANDS = {"register new dog", "increase age", "list dogs", "remove dog", "start auction", "exit", "help"};
+    private static final String[] COMMANDS = {"register new dog", "increase age", "list dogs", "remove dog", "start auction", "list auction", "close auction", "make bid", "list bids", "exit", "help"};
     private Scanner scanner = new Scanner(System.in);
     private Register register = new Register();
     private boolean running = true;
@@ -142,10 +142,6 @@ public class Main {
         String dogName = getInput();
         Auction auction = register.getAuctionByDogName(dogName);
         if (auction != null && auction.hasBids()){
-            //Bid highestBid = auction.getHighestBid();
-            //System.out.println("Highest Bid = " + highestBid.getBidAmount());
-            //System.out.println("Winner = " + winner.getName());
-            //System.out.println("Dog = " + dogInAuction.getName());
             Dog dogInAuction = auction.getDog();
             User winner = auction.getHighestBid().getBidder();
             winner.addDog(dogInAuction);
@@ -203,7 +199,6 @@ public class Main {
 
         if (dog != null && !register.dogIsInAuction(dog) && !dog.hasOwner()) {
             Auction auction = new Auction(dog);
-
             register.registerAuction(auction);
             register.registerDogToAuction(dog);
             System.out.printf("%s has ben put up for auction in auction #%d\n", dog.getName(), auction.getAuctionID());
@@ -292,7 +287,6 @@ public class Main {
             for (Dog dog : dogList) {
                 if (dog.getTailLength() >= tailLength && !dog.hasOwner()) {
                     System.out.printf("%s (%s, %d år, %d kilo, %.1f cm svans) \n", dog.getName().toLowerCase(), dog.getBreed(), dog.getAge(), dog.getWeight(), dog.getTailLength());
-                    //System.out.println(dog.hasOwner() ? "has owner" : "Does not have owner");
                 }else if (dog.getTailLength() >= tailLength && dog.hasOwner()){
                     System.out.printf("%s (%s, %d år, %d kilo, %.1f cm svans, owned by %s) \n", dog.getName().toLowerCase(), dog.getBreed(), dog.getAge(), dog.getWeight(), dog.getTailLength(), dog.getOwner().getName());
                 }
