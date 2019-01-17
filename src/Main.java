@@ -176,7 +176,7 @@ public class Main {
             if (auction != null){
                 boolean bidTooLow = true;
                 while (bidTooLow) {
-                    System.out.printf("Amount to bid (min %d)", auction.hasBids() ? auction.getHighestBid().getBidAmount() + 1 : 1); //why this no work
+                    System.out.printf("Amount to bid (min %d)", auction.hasBids() ? auction.getHighestBid().getBidAmount() + 1 : 1);
                     int bidAmount = scanner.nextInt();
                     scanner.nextLine();
                     if (bidAmount > (auction.hasBids() ? auction.getHighestBid().getBidAmount() : 0)) {
@@ -340,8 +340,6 @@ public class Main {
         for (Dog dog : user.getDogs()){
             register.unregisterDog(dog);
         }
-
-
     }
 
     private void printCommands() {

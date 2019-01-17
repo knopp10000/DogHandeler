@@ -82,12 +82,27 @@ public class Register {
         if (!cloneAuctionList().isEmpty()){
             for (Auction auction : cloneAuctionList()){
                 if (auction.getDog().getName().equals(name)){ //måste ha rätt namn
-                    System.out.println("This auction is auctioning: " + auction.getDog().getName() + " You are looking for: " + name);
+                    //System.out.println("This auction is auctioning: " + auction.getDog().getName() + " You are looking for: " + name);
                     return auction;
                 }
             }
         }
         return null;
+    }
+
+    public ArrayList<Auction> getAuctionsByUser(User user){
+        ArrayList<Auction> auctionList = new ArrayList<>();
+        for (Auction auction : auctionList){
+            if (auction.hasBids()){
+                for (int i = 0; i < auction.getBids().length -1; i++){
+                    Bid[] bids = auction.getBids();
+                    if (bids[i].getBidder().equals(user)){
+                        auctionList.add(auction);
+                    }
+                }
+            }
+        }
+        return auctionList;
     }
 
     public Dog getDogByName(String name){
@@ -150,6 +165,8 @@ public class Register {
             }
         });
     }
+
+
 
     /*
     public ArrayList<String> getSortedDogNameList(){

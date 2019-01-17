@@ -20,7 +20,11 @@ public class Auction {
     }
 
     public void addBid(Bid bid){
+        removeBidsFromUser(bid.getBidder());
         bids[bids.length-1] = bid;
+        if (bids[0] == null){
+            bids[0] = bids[1];
+        }
         bids = Arrays.copyOf(bids, bids.length+1);
     }
 
@@ -72,23 +76,27 @@ public class Auction {
 
     public void removeBidsFromUser(User user){
         //System.out.println("Bid list for this auction:" + getBidsAsString());
-        boolean usersBeenRemoved = false;
-        while (!usersBeenRemoved){
-            usersBeenRemoved = true;
+        if (bids.length > 1) {
             boolean bidIsFound = false;
             int counter = 0;
-            Bid[] temp = new Bid[bids.length-1];
-            for (int i = 0; i < bids.length-1; i++){
-                if (bids[i].getBidder().equals(user) && !bidIsFound){
-                    bidIsFound = true;
-                    usersBeenRemoved = false;
-                } else {
-                    temp[counter] = bids[i];
-                    counter++;
+            Bid[] temp = new Bid[bids.length];
+            for (int i = 0; i < bids.length; i++) {
+                if (bids[i] != null) {
+                    if (bids[i].getBidder().equals(user) && !bidIsFound) {
+                        bidIsFound = true;
+                    } else {
+                        temp[counter] = bids[i];
+                        counter++;
+                    }
                 }
+
             }
-            bids = temp;
+            if (bidIsFound){
+                bids = Arrays.copyOf(temp, temp.length -1);
+            }else {
+                bids = temp;
+            }
         }
-        //System.out.println("Bid list for this auction after remove:" + getBidsAsString());
     }
+        //System.out.println("Bid list for this auction after remove:" + getBidsAsString());
 }
