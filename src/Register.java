@@ -71,7 +71,7 @@ public class Register {
 
     public void unregisterAuction(Auction auction){
         if (auction != null){
-            userList.remove(auction);
+            auctionList.remove(auction);
             auction = null;
         }else{
             System.out.println("error case insensitive: User med det namnet fanns ej i registret");
