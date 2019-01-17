@@ -62,10 +62,10 @@ public class Auction {
         }
     }
 
-    public String getBidsAsString(){
+    public String getThreeBiggestBidsAsString(){
         sortBids();
         StringBuffer sb = new StringBuffer();
-        for (int i=0; i<bids.length-1;i++){
+        for (int i=0; i<bids.length-1 && i < 3;i++){
             sb.append(bids[i].getBidder().getName() + " " + bids[i].getBidAmount() + " kr");
             if (i < bids.length -2){
                 sb.append(", ");
@@ -75,7 +75,7 @@ public class Auction {
     }
 
     public void removeBidsFromUser(User user){
-        //System.out.println("Bid list for this auction:" + getBidsAsString());
+        //System.out.println("Bid list for this auction:" + getThreeBiggestBidsAsString());
         if (bids.length > 1) {
             boolean bidIsFound = false;
             int counter = 0;
@@ -98,5 +98,5 @@ public class Auction {
             }
         }
     }
-        //System.out.println("Bid list for this auction after remove:" + getBidsAsString());
+        //System.out.println("Bid list for this auction after remove:" + getThreeBiggestBidsAsString());
 }

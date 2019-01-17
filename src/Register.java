@@ -91,18 +91,18 @@ public class Register {
     }
 
     public ArrayList<Auction> getAuctionsByUser(User user){
-        ArrayList<Auction> auctionList = new ArrayList<>();
+        ArrayList<Auction> userAuctionList = new ArrayList<>();
         for (Auction auction : auctionList){
             if (auction.hasBids()){
                 for (int i = 0; i < auction.getBids().length -1; i++){
                     Bid[] bids = auction.getBids();
                     if (bids[i].getBidder().equals(user)){
-                        auctionList.add(auction);
+                        userAuctionList.add(auction);
                     }
                 }
             }
         }
-        return auctionList;
+        return userAuctionList;
     }
 
     public Dog getDogByName(String name){

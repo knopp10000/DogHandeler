@@ -182,7 +182,7 @@ public class Main {
                     if (bidAmount > (auction.hasBids() ? auction.getHighestBid().getBidAmount() : 0)) {
                         Bid bid = new Bid(auction, user, bidAmount);
                         auction.addBid(bid);
-                        System.out.println("Bid made");
+                        System.out.println("Error: Bid made");
                         bidTooLow = false;
                     } else {
                         System.out.println("Too low bid!");
@@ -275,7 +275,7 @@ public class Main {
         if (!auctionList.isEmpty()) {
             for (Auction auction : auctionList) {
                 auction.sortBids();
-                System.out.printf("Auction #%d: %s. Top bids: [%s]\n", auction.getAuctionID(), auction.getDog().getName(), auction.getBidsAsString());
+                System.out.printf("Auction #%d: %s. Top bids: [%s]\n", auction.getAuctionID(), auction.getDog().getName(), auction.getThreeBiggestBidsAsString());
             }
         } else {
             System.out.println("Error: no auctions in progress");
