@@ -129,11 +129,11 @@ public class Register {
         }
     }
 
-    public int sortDogsByName(Dog dog1, Dog dog2){
+    private int sortDogsByName(Dog dog1, Dog dog2){
        return dog1.getName().compareTo(dog2.getName());
     }
 
-    public void sortDogList(){
+    private void sortDogList(){
         dogList.sort((Dog dog1, Dog dog2) -> {
             if (dog1.getTailLength() < dog2.getTailLength())
                 return -1;
@@ -152,7 +152,7 @@ public class Register {
         });
     }
 
-    public void sortAuctionList(){
+    private void sortAuctionList(){
         auctionList.sort((Auction auction1, Auction auction2) -> {
             if (auction1.getHighestBid().getBidAmount() < auction2.getHighestBid().getBidAmount())
                 return 1;
