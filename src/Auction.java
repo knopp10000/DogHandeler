@@ -37,6 +37,7 @@ public class Auction {
     }
 
     public Bid[] getBids(){
+        sortBids();
         return bids.clone();
     }
 
@@ -49,15 +50,20 @@ public class Auction {
         if (this.hasBids()){
             return bids[0];
         }
-        return new Bid(this, new User("Fuck"), 9999); //correct?
+        return new Bid(this, new User("Fuck"), -1); //correct?
     }
 
-    public void sortBids() {
-        for (int indexToSort = 1; indexToSort < bids.length -1; indexToSort++){
-            if (bids[indexToSort].getBidAmount() > bids[indexToSort -1].getBidAmount()){
-                Bid bid = bids[indexToSort];
-                bids[indexToSort] = bids[indexToSort-1];
-                bids[indexToSort-1] = bid;
+    private void sortBids() {
+        boolean isSorted = false;
+        while(!isSorted){
+            isSorted = true;
+            for (int indexToSort = 1; indexToSort < bids.length -1; indexToSort++){
+                if (bids[indexToSort].getBidAmount() > bids[indexToSort -1].getBidAmount()){
+                    Bid bid = bids[indexToSort];
+                    bids[indexToSort] = bids[indexToSort-1];
+                    bids[indexToSort-1] = bid;
+                    isSorted= false;
+                }
             }
         }
     }

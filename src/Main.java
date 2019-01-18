@@ -269,7 +269,6 @@ public class Main {
         ArrayList<Auction> auctionList = register.cloneAuctionList();
         if (!auctionList.isEmpty()) {
             for (Auction auction : auctionList) {
-                auction.sortBids();
                 System.out.printf("Auction #%d: %s. Top bids: [%s]\n", auction.getAuctionID(), auction.getDog().getName(), auction.getThreeBiggestBidsAsString());
             }
         } else {
