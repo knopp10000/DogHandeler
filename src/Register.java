@@ -39,9 +39,7 @@ public class Register {
     }
 
     public ArrayList<User> cloneUserList(){
-        ArrayList<User> clone = new ArrayList<>(userList.size());
-        for (User user : userList) clone.add(user);
-        return clone;
+        return new ArrayList<User>(userList);
     }
 
     public void unregisterDogInAuction(Dog dog){
