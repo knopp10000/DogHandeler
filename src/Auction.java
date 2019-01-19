@@ -54,16 +54,13 @@ public class Auction {
     }
 
     private void sortBids() {
-        boolean isSorted = false;
-        while(!isSorted){
-            isSorted = true;
-            for (int indexToSort = 1; indexToSort < bids.length -1; indexToSort++){
-                if (bids[indexToSort].getBidAmount() > bids[indexToSort -1].getBidAmount()){
-                    Bid bid = bids[indexToSort];
-                    bids[indexToSort] = bids[indexToSort-1];
-                    bids[indexToSort-1] = bid;
-                    isSorted= false;
-                }
+        for (int i = 1; i < bids.length - 1; i++) {
+            int indexToSort = i;
+            while (indexToSort > 0 && bids[indexToSort].getBidAmount() > bids[indexToSort - 1].getBidAmount()) {
+                Bid bid = bids[indexToSort];
+                bids[indexToSort] = bids[indexToSort - 1];
+                bids[indexToSort - 1] = bid;
+                indexToSort--;
             }
         }
     }
